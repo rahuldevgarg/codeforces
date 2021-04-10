@@ -7,40 +7,28 @@ public class CF165A {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
-        Node[] points = new Node[n+1];
-        for (int i = 1; i <= n; i++) {
-            points[i] = new Node(sc.nextInt(), sc.nextInt());
+        int[] x = new int[n];
+        int[] y = new int[n];
+        for (int i = 0; i < n; i++) {
+            x[i] = sc.nextInt();
+            y[i] = sc.nextInt();
         }
-        int ans = 0;
-        for (int i = 1; i <= n; i++) {
-            int a = 0;
-            int b = 0;
-            int c = 0;
-            int d = 0;
-            for (int j = 1; j <= n; j++) {
-                if (i == j) continue;
-                if (points[j].y == points[i].y && points[i].x < points[j].x) a = 1; //right
-                else if (points[j].y == points[i].y && points[i].x > points[j].x) b = 1; //left
-                else if (points[j].y > points[i].y && points[i].x == points[j].x) c = 1; //up
-                else if (points[j].y < points[i].y && points[i].x == points[j].x) d = 1; //down
-
-                if ((a + b + c + d) == 0) {
-                    ans++;
-                    break;
-                }
-
+        int count = 0;
+        for (int i = 0; i < n; i++) {
+            boolean r = false;
+            boolean u = false;
+            boolean l = false;
+            boolean d = false;
+            for (int j = 0; j < n; j++) {
+                if (x[j] > x[i] && y[j] == y[i]) r = true;
+                if (x[j] < x[i] && y[j] == y[i]) l = true;
+                if (x[j] == x[i] && y[j] > y[i]) u = true;
+                if (x[j] == x[i] && y[j] < y[i]) d = true;
             }
+            if (r && l && u && d) count++;
         }
-        System.out.println(ans);
-    }
-}
+        System.out.println(count);
+        sc.close();
 
-class Node {
-    int x;
-    int y;
-
-    public Node(int x, int y) {
-        this.x = x;
-        this.y = y;
     }
 }
